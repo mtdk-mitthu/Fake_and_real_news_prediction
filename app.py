@@ -6,6 +6,7 @@ import os
 
 app = Flask(__name__)
 
+# Load trained model if available
 model_filename = 'model.pkl'
 if os.path.exists(model_filename):
     model = joblib.load(model_filename)
@@ -14,6 +15,7 @@ else:
     model = None
     print('Model not found')
 
+# Prediction endpoint
 @app.route('/predict', methods=['POST'])
 def predict():
     if model:
@@ -26,6 +28,7 @@ def predict():
     else:
         return jsonify({'error': 'No model loaded'})
 
+# Run Flask app locally
 if __name__ == "__main__":
     port = 12345
     app.run(port=port, debug=True)
